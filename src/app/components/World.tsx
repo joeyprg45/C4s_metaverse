@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface Position {
   x: number;
@@ -189,7 +188,7 @@ const World: React.FC = () => {
   const viewStartX = Math.max(0, playerPosition.x - VIEW_RANGE);
   const viewStartY = Math.max(0, playerPosition.y - VIEW_RANGE);
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
     const newPosition = { ...playerPosition };
 
     switch (e.key.toLowerCase()) {
@@ -229,14 +228,14 @@ const World: React.FC = () => {
     if (!isObstacle) {
       setPlayerPosition(newPosition);
     }
-  };
+  }, [playerPosition, currentFloor, currentLayout]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [playerPosition, currentFloor]);
+  }, [handleKeyDown]);
 
   // タイルの種類を判定する関数
   const getTileType = (x: number, y: number) => {
