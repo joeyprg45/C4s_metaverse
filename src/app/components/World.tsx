@@ -175,7 +175,6 @@ const FLOOR_LAYOUTS: Record<number | string, FloorLayout> = {
 };
 
 const World: React.FC = () => {
-  const router = useRouter();
   const [currentFloor, setCurrentFloor] = useState(1);
   const [playerPosition, setPlayerPosition] = useState<Position>(
     FLOOR_LAYOUTS[1].playerStart
